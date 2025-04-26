@@ -1,0 +1,332 @@
+.body {
+  background-color: white;
+}
+
+#root {
+  margin: auto;
+}
+/* Base container with grid layout */
+.container {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  grid-template-rows: auto auto auto 1fr auto;
+  grid-template-areas:
+    "header header"
+    "list add-board"
+    "board-name board-controls"
+    "board board"
+    "add-column add-column";
+  gap: 16px;
+  padding: 20px;
+  margin: 0 auto;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Header styles */
+.header {
+  grid-area: header;
+  color: #2c3e50;
+  margin: 0;
+  padding: 16px 0;
+  font-size: 28px;
+  border-bottom: 2px solid #e0e6ed;
+}
+
+/* Board list with horizontal scroll */
+.board-list {
+  grid-area: list;
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  gap: 8px;
+  align-items: center;
+}
+
+.board-list > div {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  background-color: #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.board-list > div:hover {
+  background-color: #cbd5e1;
+}
+
+.board-list > div[class*="bg-gray-700"] {
+  background-color: #334155;
+  color: white;
+}
+
+/* Add board form */
+.add-board {
+  grid-area: add-board;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.add-board input {
+  padding: 8px 12px;
+  border: 1px solid black;
+  border-radius: 25px;
+  flex: 1;
+  background-color: white;
+  margin: 10px;
+  color:black;
+}
+
+/* Board name area */
+.board-name {
+  grid-area: board-name;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.board-name input {
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background-color: transparent;
+  padding: 4px 0;
+  color: #1e293b;
+  width: 250px;
+}
+
+.board-name input:focus {
+  outline: none;
+  border-bottom: 2px solid #3b82f6;
+}
+
+.board-name span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Board controls area (merging delete-board and add-member) */
+.add-member {
+  grid-area: board-controls;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  /* justify-content: flex-end; */
+}
+
+.add-member input {
+  padding: 8px 12px;
+  border: 1px solid black;
+  border-radius: 25px;
+  flex: 1;
+  background-color: white;
+  margin: 10px;
+  color:black;
+}
+
+/* General button styles */
+button {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  margin: 10px;
+}
+
+button:hover {
+  background-color: #3b82f6;
+}
+
+button:active {
+  background-color: #3b82f6;
+}
+
+/* Different button styles */
+.add-member button {
+  background-color: #3b82f6;
+}
+
+.add-member button:hover {
+  background-color: #3b82f6;
+}
+
+/* Board with columns */
+.board {
+  grid-area: board;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 16px;
+}
+
+/* Column styles */
+.column {
+  background-color: #e2e8f0;
+  border-radius: 8px;
+  min-width: 280px;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.column-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: #cbd5e1;
+}
+
+.column-name input {
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background-color: transparent;
+  padding: 4px 0;
+  color: #1e293b;
+  width: 250px;
+}
+
+.column-name input:focus {
+  outline: none;
+  border-bottom: 2px solid #3b82f6;
+}
+
+.column-name button {
+  background: none;
+  color: #64748b;
+  padding: 4px 8px;
+  font-size: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.column-name button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #334155;
+}
+
+/* Task container */
+.task {
+  padding: 8px;
+  flex: 1;
+  overflow-y: auto;
+  max-height: calc(100vh - 300px);
+}
+
+/* Task card */
+.task > div {
+  background-color: white;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: grab;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task > div:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.task > div > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.task > div > div:first-child input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  flex: 1;
+  padding: 4px 0;
+  font-weight: 500;
+  color: black;
+}
+
+.task > div > div:first-child input:focus {
+  outline: none;
+  border-bottom: 1px solid #3b82f6;
+}
+
+.x-button {
+  background: none;
+  color: #64748b;
+  padding: 2px 6px;
+  font-size: 16px;
+}
+
+.x-button:hover {
+  color: #ef4444;
+  background: none;
+}
+
+/* Task assignment dropdown */
+.task select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background-color: #f8fafc;
+  color: #475569;
+  font-size: 14px;
+}
+
+/* Add task input */
+.add-task {
+  margin: 10px;
+  padding: 8px 12px;
+  border: 1px solid black;
+  border-radius: 25px;
+  flex: 1;
+  background-color: white;
+  color: black;
+}
+
+/* Add column section */
+.add-column {
+  grid-area: add-column;
+  display: flex;
+  gap: 8px;
+  padding: 16px 0;
+  border-top: 1px solid #e0e6ed;
+}
+
+.add-column input {
+  margin: 10px;
+  padding: 8px 12px;
+  border: 1px solid black;
+  border-radius: 25px;
+  flex: 1;
+  background-color: white;
+  color: black;
+}
+
+.add-column button {
+  margin: 10px;
+}
+
+input {
+  margin: 10px;
+  padding: 8px 12px;
+  border: 1px solid black;
+  border-radius: 25px;
+  flex: 1;
+  background-color: white;
+  color: black
+}

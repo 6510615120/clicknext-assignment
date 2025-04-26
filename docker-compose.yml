@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - '5173:5173'
+    environment:
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - api-gateway
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - '3000:3000'
+    environment:
+      - USER_SERVICE_URL=http://user-service:8000
+      - BOARD_SERVICE_URL=http://board-service:8001
+      - JWT_SECRET=bf96c423bdf57315287f08b3e0e6ec27a48311fc99132ef3f153800f216636b1262dd6bb0bbf67c9adf2bf5bd15e8b7f8eb752131c02e48d9c3201069b751612ad5b2626c82eea438ebd6ab0a34ef4f9c1f343498d78c2739ee748837df884795964557ff1aa2c781f68d8379f629c5f193d323154d422a1a1a969e5c45eb6df8f921715264e65062ff7ceff1e73a656f7339acd901754c902d721e61584866d6d163cfb4a11209f0e38c4d5a255fdabec88c57a928e9aebb7259942c0613025cae8ab517a19762a2814ec17faea67ee1422dd0930d87263702ef0e9db4b2489a534cf9da2b90cefa308901919e7625484dc7315832616b6da30bd51a3d704af
+    depends_on:
+      - user-service
+      - board-service
+
+  user-service:
+    build: ./user-service
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - '8000:8000'
+    environment:
+      POSTGRES_DB: userdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: user-db
+      POSTGRES_PORT: 5432
+    depends_on:
+      user-db:
+        condition: service_healthy
+
+  board-service:
+    build: ./board-service
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8001"
+    ports:
+      - '8001:8001'
+    environment:
+      POSTGRES_DB: boarddb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST: board-db
+      POSTGRES_PORT: 5432
+    depends_on:
+      board-db:
+        condition: service_healthy
+
+  user-db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: userdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - user-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  board-db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: boarddb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - board-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  user-db-data:
+  board-db-data:

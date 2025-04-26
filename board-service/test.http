@@ -1,0 +1,89 @@
+### Get board IDs for user
+GET http://localhost:9000/board/id/1
+Accept: application/json
+
+###
+
+### Get boards for user
+GET http://localhost:9000/board/get/1
+Accept: application/json
+
+###
+
+### Create a new board
+POST http://localhost:9000/board/
+Content-Type: application/json
+
+{
+  "name": "New Board",
+  "owner_id": 1,
+  "members": [1]
+}
+
+###
+
+### Get board details
+GET http://localhost:9000/board/1
+Accept: application/json
+
+###
+
+### Create a column
+POST http://localhost:9000/column/
+Content-Type: application/json
+
+{
+  "name": "To Do123",
+  "board": 1
+}
+
+###
+
+### Update a column
+PUT http://localhost:9000/column/1
+Content-Type: application/json
+
+{
+  "board": 1,
+  "name": "Updated Column"
+}
+
+###
+
+### Delete a column
+DELETE http://localhost:9000/column/delete/1
+
+
+###
+
+### Create a task
+POST http://localhost:9000/task/
+Content-Type: application/json
+
+{
+  "title": "4",
+  "column": 4,
+  "order": 0,
+  "assignees": [1]
+}
+
+###
+
+### Delete a task
+DELETE http://localhost:9000/task/delete/3
+
+###
+
+### Move a task
+POST http://localhost:9000/task/move/
+Content-Type: application/json
+
+{
+  "task_id": 5,
+  "new_column": 1,
+  "new_order": 0
+}
+
+###
+GET http://localhost:8000/users
+Content-Type: application/json
