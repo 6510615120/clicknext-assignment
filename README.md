@@ -28,6 +28,6 @@ all url path
 - /login #once u login u got token for auth i didnt implement logout yet so if u want 
 - /register
 
-##Notices
+## Notices
 once u login u got token for auth i didnt implement logout yet so if u want to logout u must delete token from browser manually
 the api didnt check user that send so that now any user can still change any board if they backdoor
