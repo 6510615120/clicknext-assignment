@@ -25,7 +25,7 @@ and I also so run it as development mode
 
 all url path
 - /boards
-- /login #once u login u got token for auth i didnt implement logout yet so if u want 
+- /login
 - /register
 
 ## Notices
